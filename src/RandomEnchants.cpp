@@ -11,7 +11,7 @@ public:
     RandomEnchantsPlayer() : PlayerScript("RandomEnchantsPlayer") { }
 
     void OnLogin(Player* player) override {
-		if (sConfigMgr->GetBoolDefault("RandomEnchants.AnnounceOnLogin", true))
+		if (sConfigMgr->GetBoolDefault("RandomEnchants.AnnounceOnLogin", false))
             ChatHandler(player->GetSession()).SendSysMessage(sConfigMgr->GetStringDefault("RandomEnchants.OnLoginMessage", "This server is running a RandomEnchants Module.").c_str());
     }
 	void OnLootItem(Player* player, Item* item, uint32 count, uint64 /*lootguid*/) override
@@ -26,7 +26,7 @@ public:
 	}
 	void OnQuestRewardItem(Player* player, Item* item, uint32 count) override
 	{
-		if(sConfigMgr->GetBoolDefault("RandomEnchants.OnQuestReward", true))
+		if(sConfigMgr->GetBoolDefault("RandomEnchants.OnQuestReward", false))
 			RollPossibleEnchant(player, item);
 	}
 	void RollPossibleEnchant(Player* player, Item* item)
@@ -66,11 +66,11 @@ public:
 		}
 		ChatHandler chathandle = ChatHandler(player->GetSession());
 		if (slotRand[2] != -1)
-			chathandle.PSendSysMessage("Newly Acquired |cffFF0000 %s |rhas received|cffFF0000 3 |rrandom enchantments!", item->GetTemplate()->Name1.c_str());
+			chathandle.PSendSysMessage("Jackpot! |cffFF0000 %s |rhas received|cffFF0000 3 |rrandom enchantments!", item->GetTemplate()->Name1.c_str());
 		else if(slotRand[1] != -1)
-			chathandle.PSendSysMessage("Newly Acquired |cffFF0000 %s |rhas received|cffFF0000 2 |rrandom enchantments!", item->GetTemplate()->Name1.c_str());
+			chathandle.PSendSysMessage("Amazing! |cffFF0000 %s |rhas received|cffFF0000 2 |rrandom enchantments!", item->GetTemplate()->Name1.c_str());
 		else if(slotRand[0] != -1)
-			chathandle.PSendSysMessage("Newly Acquired |cffFF0000 %s |rhas received|cffFF0000 1 |rrandom enchantment!", item->GetTemplate()->Name1.c_str());
+			chathandle.PSendSysMessage("nice! |cffFF0000 %s |rhas received|cffFF0000 1 |rrandom enchantment!", item->GetTemplate()->Name1.c_str());
 	}
 	int getRandEnchantment(Item* item)
 	{
